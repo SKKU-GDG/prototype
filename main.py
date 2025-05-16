@@ -91,4 +91,4 @@ def serve_js():
 
 if __name__ == '__main__':
     # Flask 앱을 실행합니다. Replit은 기본적으로 0.0.0.0 주소와 8080 포트를 사용합니다.
-    app.run(host='0.0.0.0', port=os.environ.get('PORT', 8080))
+    app.run(host='0.0.0.0', port=5000)
