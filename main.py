@@ -7,7 +7,7 @@ from google.cloud import speech_v1p1beta1 as speech
 # .env 파일에서 환경 변수를 로드합니다. Replit의 경우 'Secrets'에 설정된 값을 자동으로 가져옵니다.
 load_dotenv()
 
-app = Flask(__name__, static_folder='static')  # 'static' 폴더를 정적 파일 제공 폴더로 지정
+app = Flask(__name__)
 
 # Google Cloud Speech-to-Text 클라이언트 초기화
 # Replit 'Secrets'에 GOOGLE_CLOUD_SPEECH_API_KEY를 설정했다면 아래처럼 API 키로 초기화할 수 있습니다.
@@ -35,6 +35,11 @@ def analyze_pronunciation():
 
     audio_file = request.files['audio']
     target_sentence = request.form['sentence']
+
+
+@app.route('/app.js')
+def serve_js():
+    return send_from_directory('static', 'app.js')
 
     # 1. 녹음된 음성을 텍스트로 변환 (STT: Speech-to-Text)
     audio_content = audio_file.read()
