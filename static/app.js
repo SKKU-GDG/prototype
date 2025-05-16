@@ -5,9 +5,8 @@ const feedbackDiv = document.getElementById('feedback');
 
 let mediaRecorder;
 let audioChunks = [];
-let audioStream; // 마이크 스트림을 저장할 변수
+let audioStream;
 
-// 녹음 시작 버튼 클릭 이벤트 리스너
 recordButton.addEventListener('click', async () => {
     const sentence = sentenceInput.value.trim();
     if (!sentence) {
@@ -16,31 +15,23 @@ recordButton.addEventListener('click', async () => {
     }
 
     try {
-        // 사용자 마이크 접근 권한 요청
         audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        // MediaRecorder를 사용하여 오디오 스트림을 녹음합니다.
-        // 'audio/webm;codecs=opus'는 웹에서 일반적으로 사용되는 효율적인 오디오 형식입니다.
         mediaRecorder = new MediaRecorder(audioStream, { mimeType: 'audio/webm;codecs=opus' });
 
-        audioChunks = []; // 새로운 녹음을 위해 이전 데이터 초기화
+        audioChunks = [];
 
-        // 데이터가 사용 가능할 때마다 청크를 저장합니다.
         mediaRecorder.ondataavailable = event => {
             audioChunks.push(event.data);
         };
 
-        // 녹음이 중지되었을 때 실행될 로직
         mediaRecorder.onstop = async () => {
-            // 녹음된 오디오 청크들을 하나의 Blob 객체로 합칩니다.
             const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-            // Blob과 원본 문장을 백엔드 서버로 전송합니다.
             sendAudioToServer(audioBlob, sentence);
         };
 
-        // 녹음 시작
         mediaRecorder.start();
-        recordButton.disabled = true; // 녹음 중에는 녹음 시작 버튼 비활성화
-        stopButton.disabled = false;  // 녹음 중지 버튼 활성화
+        recordButton.disabled = true; 
+        stopButton.disabled = false;  
         feedbackDiv.innerHTML = '✨ Recording... Please pronounce the sentence clearly! ✨';
 
     } catch (err) {
