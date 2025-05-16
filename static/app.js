@@ -11,7 +11,7 @@ let audioStream; // 마이크 스트림을 저장할 변수
 recordButton.addEventListener('click', async () => {
     const sentence = sentenceInput.value.trim();
     if (!sentence) {
-        alert('연습할 문장을 입력해주세요!');
+        alert('Please enter a sentence to practice!');
         return;
     }
 
@@ -41,7 +41,7 @@ recordButton.addEventListener('click', async () => {
         mediaRecorder.start();
         recordButton.disabled = true; // 녹음 중에는 녹음 시작 버튼 비활성화
         stopButton.disabled = false;  // 녹음 중지 버튼 활성화
-        feedbackDiv.innerHTML = '✨ 녹음 중... 연습할 문장을 또박또박 발음해주세요! ✨';
+        feedbackDiv.innerHTML = '✨ Recording... Please pronounce the sentence clearly! ✨';
 
     } catch (err) {
         console.error('마이크 접근 오류:', err);
@@ -58,7 +58,7 @@ stopButton.addEventListener('click', () => {
     }
     recordButton.disabled = false; // 녹음 중지 후 녹음 시작 버튼 활성화
     stopButton.disabled = true;  // 녹음 중지 버튼 비활성화
-    feedbackDiv.innerHTML = '⏳ 음성 분석 중... 잠시만 기다려주세요! ⏳';
+    feedbackDiv.innerHTML = '⏳ Analyzing speech... Please wait a moment! ⏳';
 });
 
 // 백엔드 서버로 음성 데이터와 문장 전송 함수
@@ -91,6 +91,6 @@ async function sendAudioToServer(audioBlob, sentence) {
 
     } catch (error) {
         console.error('음성 전송 또는 분석 오류:', error);
-        feedbackDiv.innerHTML = `🚨 오류가 발생했습니다. 다시 시도해주세요.<br>오류 내용: ${error.message}`;
+        feedbackDiv.innerHTML = `🚨 An error occurred. Please try again.<br>Error details: ${error.message}`;
     }
 }

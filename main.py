@@ -42,7 +42,7 @@ def analyze_pronunciation():
         config = speech.RecognitionConfig(
             encoding=speech.RecognitionConfig.AudioEncoding.WEBM_OPUS,
             sample_rate_hertz=48000,
-            language_code='ko-KR',
+            language_code='en-US',
         )
 
         stt_response = speech_client.recognize(config=config, audio=audio_wav)
@@ -58,11 +58,11 @@ def analyze_pronunciation():
 
         # 2. Gemini API를 사용한 피드백
         prompt = f"""
-        당신은 한국어 발음 전문가입니다. 주어진 원본 문장과 사용자가 발음한 문장을 비교하여 발음 정확도에 대한 피드백을 제공해주세요.
-        피드백은 다음 형식을 따릅니다:
-        1. **전반적인 평가:** 전반적인 발음이 어떤지 간략하게 평가해주세요.
-        2. **구체적인 개선점:** 어떤 단어 또는 음절의 발음이 원본과 달랐는지 구체적으로 지적하고, 어떻게 수정해야 할지 설명을 덧붙여주세요.
-        3. **다음 연습 팁:** 전반적인 발음 향상을 위한 간단한 팁을 하나 제공해주세요.
+        You are an English pronunciation expert. Please compare the original sentence with the user's pronunciation and provide feedback on pronunciation accuracy.
+        Format your feedback as follows:
+        1. **Overall Assessment:** Briefly evaluate the overall pronunciation.
+        2. **Specific Improvements:** Point out which words or syllables were pronounced differently from the original, and explain how to correct them.
+        3. **Practice Tip:** Provide a simple tip for overall pronunciation improvement.
 
         원본 문장: "{target_sentence}"
         사용자가 발음한 문장: "{transcribed_text}"
