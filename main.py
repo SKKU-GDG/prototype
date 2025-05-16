@@ -36,13 +36,12 @@ def analyze_pronunciation():
     audio_file = request.files['audio']
     target_sentence = request.form['sentence']
 
+    # 1. 녹음된 음성을 텍스트로 변환 (STT: Speech-to-Text)
+    audio_content = audio_file.read()
 
 @app.route('/app.js')
 def serve_js():
     return send_from_directory('static', 'app.js')
-
-    # 1. 녹음된 음성을 텍스트로 변환 (STT: Speech-to-Text)
-    audio_content = audio_file.read()
     audio_wav = speech.RecognitionAudio(content=audio_content)
 
     # JavaScript에서 'audio/webm;codecs=opus'로 녹음했으므로, 그에 맞춰 설정합니다.
