@@ -12,21 +12,24 @@ speech_client = speech.SpeechClient(
     client_options={"api_key": os.getenv("GOOGLE_CLOUD_SPEECH_API_KEY")})
 
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-gemini_model = genai.GenerativeModel('gemini-pro')
+gemini_model = genai.GenerativeModel('gemini-2.0-flash')
+
 
 @app.route('/')
 def index():
     return send_from_directory(app.static_folder, 'index.html')
 
+
 @app.route('/app.js')
 def serve_js():
     return send_from_directory('static', 'app.js')
 
+
 @app.route('/analyze-pronunciation', methods=['POST'])
 def analyze_pronunciation():
     if 'audio' not in request.files or 'sentence' not in request.form:
-        return jsonify({"feedback": 
-                       "누락된 데이터입니다. 오디오 파일과 연습할 문장을 모두 제공해주세요."}), 400
+        return jsonify({"feedback":
+                        "누락된 데이터입니다. 오디오 파일과 연습할 문장을 모두 제공해주세요."}), 400
 
     audio_file = request.files['audio']
     target_sentence = request.form['sentence']
@@ -46,7 +49,8 @@ def analyze_pronunciation():
         transcribed_text = ""
 
         if stt_response.results:
-            transcribed_text = stt_response.results[0].alternatives[0].transcript
+            transcribed_text = stt_response.results[0].alternatives[
+                0].transcript
 
         if not transcribed_text:
             return jsonify(
@@ -73,6 +77,7 @@ def analyze_pronunciation():
     except Exception as e:
         print(f"오류 발생: {e}")
         return jsonify({"feedback": f"처리 중 오류가 발생했습니다: {str(e)}."}), 500
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
