@@ -29,13 +29,13 @@ def serve_js():
 def analyze_pronunciation():
     if 'audio' not in request.files or 'sentence' not in request.form:
         return jsonify({"feedback":
-                        "누락된 데이터입니다. 오디오 파일과 연습할 문장을 모두 제공해주세요."}), 400
+                        "Missing data. Please provide both audio file and practice sentence."}), 400
 
     audio_file = request.files['audio']
     target_sentence = request.form['sentence']
 
     try:
-        # 1. 녹음된 음성을 텍스트로 변환 (STT)
+        # 1. Convert recorded audio to text (STT)
         audio_content = audio_file.read()
         audio_wav = speech.RecognitionAudio(content=audio_content)
 
@@ -54,9 +54,9 @@ def analyze_pronunciation():
 
         if not transcribed_text:
             return jsonify(
-                {"feedback": "음성을 텍스트로 변환할 수 없었습니다. 좀 더 명확하게 발음해 주세요."}), 200
+                {"feedback": "Could not convert speech to text. Please speak more clearly."}), 200
 
-        # 2. Gemini API를 사용한 피드백
+        # 2. Generate feedback using Gemini API
         prompt = f"""
         You are an English pronunciation expert. Please compare the original sentence with the user's pronunciation and provide feedback on pronunciation accuracy.
         Format your feedback as follows:
@@ -78,8 +78,8 @@ def analyze_pronunciation():
         }), 200
 
     except Exception as e:
-        print(f"오류 발생: {e}")
-        return jsonify({"feedback": f"처리 중 오류가 발생했습니다: {str(e)}."}), 500
+        print(f"Error occurred: {e}")
+        return jsonify({"feedback": f"An error occurred during processing: {str(e)}."}), 500
 
 
 if __name__ == '__main__':

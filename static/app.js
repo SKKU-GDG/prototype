@@ -35,16 +35,16 @@ recordButton.addEventListener('click', async () => {
         feedbackDiv.innerHTML = '✨ Recording... Please pronounce the sentence clearly! ✨';
 
     } catch (err) {
-        console.error('마이크 접근 오류:', err);
-        alert('마이크 접근 권한을 허용해주세요. (브라우저 설정 확인)');
+        console.error('Microphone access error:', err);
+        alert('Please allow microphone access (check browser settings)');
     }
 });
 
-// 녹음 중지 버튼 클릭 이벤트 리스너
+// Stop recording button click event listener
 stopButton.addEventListener('click', () => {
     if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-        mediaRecorder.stop(); // 녹음 중지
-        // 마이크 스트림 트랙을 정지하여 마이크 아이콘을 끄고 리소스 해제
+        mediaRecorder.stop(); // Stop recording
+        // Stop microphone stream tracks to turn off mic icon and release resources
         audioStream.getTracks().forEach(track => track.stop());
     }
     recordButton.disabled = false; // 녹음 중지 후 녹음 시작 버튼 활성화
@@ -52,15 +52,15 @@ stopButton.addEventListener('click', () => {
     feedbackDiv.innerHTML = '⏳ Analyzing speech... Please wait a moment! ⏳';
 });
 
-// 백엔드 서버로 음성 데이터와 문장 전송 함수
+// Function to send audio data and sentence to backend server
 async function sendAudioToServer(audioBlob, sentence) {
     const formData = new FormData();
-    // FormData에 오디오 Blob과 원본 문장을 추가합니다.
-    formData.append('audio', audioBlob, 'pronunciation.webm'); // 파일 이름은 확장자 맞춰줍니다.
+    // Add audio Blob and original sentence to FormData
+    formData.append('audio', audioBlob, 'pronunciation.webm'); // File name with correct extension
     formData.append('sentence', sentence);
 
     try {
-        // Flask 백엔드의 '/analyze-pronunciation' 엔드포인트로 POST 요청을 보냅니다.
+        // Send POST request to Flask backend '/analyze-pronunciation' endpoint
         const response = await fetch('/analyze-pronunciation', {
             method: 'POST',
             body: formData // FormData 객체는 자동으로 'multipart/form-data'로 설정됩니다.
