@@ -83,7 +83,11 @@ async function sendAudioToServer(audioBlob, sentence) {
 
         const data = await response.json(); // 서버 응답을 JSON 형태로 파싱합니다.
         // 받은 피드백을 화면에 표시합니다.
-        feedbackDiv.innerHTML = `<h3>📢 Gemini의 피드백:</h3> ${data.feedback || '피드백을 받을 수 없습니다.'}`;
+        feedbackDiv.innerHTML = `
+            <h3>🎤 인식된 발음:</h3>
+            <p class="transcribed-text">${data.transcribed_text || '음성을 인식할 수 없습니다.'}</p>
+            <h3>📢 Gemini의 피드백:</h3>
+            <p>${data.feedback || '피드백을 받을 수 없습니다.'}</p>`;
 
     } catch (error) {
         console.error('음성 전송 또는 분석 오류:', error);

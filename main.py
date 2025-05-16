@@ -72,7 +72,10 @@ def analyze_pronunciation():
         gemini_response = gemini_model.generate_content(prompt)
         feedback = gemini_response.text
 
-        return jsonify({"feedback": feedback}), 200
+        return jsonify({
+            "feedback": feedback,
+            "transcribed_text": transcribed_text
+        }), 200
 
     except Exception as e:
         print(f"오류 발생: {e}")
