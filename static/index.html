@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>발음 연습 웹페이지</title>
+    <style>
+        /* 기본적인 CSS 스타일을 여기에 포함합니다. */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #e0f2f7; /* 부드러운 하늘색 배경 */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 700px;
+            width: 100%;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1, h2 {
+            color: #2c3e50; /* 진한 파랑색 */
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        textarea {
+            width: calc(100% - 20px);
+            height: 120px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #b3e5fc; /* 연한 하늘색 테두리 */
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 16px;
+            box-sizing: border-box; /* 패딩이 너비에 포함되도록 */
+            transition: border-color 0.3s ease;
+        }
+        textarea:focus {
+            border-color: #03a9f4; /* 포커스 시 더 진한 하늘색 */
+            outline: none;
+        }
+        button {
+            padding: 12px 25px;
+            margin: 0 10px 15px;
+            border: none;
+            border-radius: 25px; /* 둥근 버튼 */
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button#recordButton {
+            background-color: #28a745; /* 녹색 */
+            color: white;
+        }
+        button#recordButton:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        button#stopButton {
+            background-color: #dc3545; /* 빨간색 */
+            color: white;
+        }
+        button#stopButton:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        #feedback {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #b3e5fc;
+            border-radius: 8px;
+            background-color: #e1f5fe; /* 연한 하늘색 배경 */
+            min-height: 100px;
+            text-align: left;
+            line-height: 1.8;
+            white-space: pre-wrap; /* 줄바꿈 유지 */
+            word-wrap: break-word; /* 긴 단어 줄바꿈 */
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        #feedback h3 {
+            color: #0288d1; /* 진한 파란색 */
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗣️ 발음 연습 웹페이지 🗣️</h1>
+
+        <p>연습하고 싶은 한국어 문장을 아래에 입력하고, 녹음 버튼을 눌러 발음해 보세요.</p>
+        <textarea id="sentenceInput" placeholder="예: 안녕하세요, 반갑습니다. 저는 한국어를 배우고 있습니다."></textarea><br>
+
+        <button id="recordButton">🎙️ 녹음 시작</button>
+        <button id="stopButton" disabled>⏹️ 녹음 중지</button>
+
+        <h2>✨ Gemini 발음 피드백 ✨</h2>
+        <div id="feedback">
+            <p>여기에 Gemini AI의 발음 피드백이 나타납니다.</p>
+        </div>
+    </div>
+    <script src="app.js"></script> </body>
+</html>
