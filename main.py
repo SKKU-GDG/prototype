@@ -58,16 +58,21 @@ def analyze_pronunciation():
 
         # 2. Generate feedback using Gemini API
         prompt = f"""
-        You are an English pronunciation expert. Please compare the original sentence with the user's pronunciation and provide feedback on pronunciation accuracy.
-        Format your feedback as follows:
-        1. **Overall Assessment:** Briefly evaluate the overall pronunciation.
-        2. **Specific Improvements:** Point out which words or syllables were pronounced differently from the original, and explain how to correct them.
-        3. **Practice Tip:** Provide a simple tip for overall pronunciation improvement.
+        I want you to act as a pronunciation coach.
 
-        원본 문장: "{target_sentence}"
-        사용자가 발음한 문장: "{transcribed_text}"
+        Here's the target sentence:
+        Original: "{target_sentence}"
 
-        피드백:
+        Here's the user's pronunciation attempt:
+        UserPronunciation: "{transcribed_text}"
+
+        Please identify the pronunciation differences between the user's attempt and the original. For each mispronounced word or phoneme, provide:
+        1. The correct phonetic transcription (IPA)
+        2. A comparison with the user's mispronunciation
+        3. Specific articulation tips — including mouth shape, tongue position, voicing, and airflow
+        4. Optional visualizations or example comparisons, if useful
+
+        The goal is to help the user pronounce the sentence naturally. Be clear and educational, using simple explanations if possible.
         """
         gemini_response = gemini_model.generate_content(prompt)
         feedback = gemini_response.text
